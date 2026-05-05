@@ -14,6 +14,8 @@ This document defines how to write, review, and improve Python code within the o
 5. [AI Review Prompt](#ai-review-prompt)
 6. [PR Checklist](#pr-checklist)
 
+> **Reading order:** Start here (CONTRIBUTING.md) to understand the rules — branching, tooling, and PR conventions. Once you're set up, read [PLAYBOOK.md](PLAYBOOK.md) to understand how work flows from idea to production.
+
 ---
 
 ## General Philosophy
@@ -77,39 +79,8 @@ refactor: extract connection logic into a separate module
 
 ## AI Review Prompt
 
-Before opening a PR, run your code through this prompt on [Claude](https://claude.ai).  
-Copy the full prompt, paste your code where indicated, and send the message.
-
-```
-You are a Python expert. Analyze and improve the following code following these 20 rules:
-
-1.  PEP 8: Apply style conventions (naming, spacing, 4-space indentation).
-2.  Descriptive names: Rename variables, functions, and classes with clear, descriptive names in English.
-3.  Type hints: Add type annotations to all functions (parameters and return values).
-4.  Docstrings: Write docstrings for all functions, classes, and modules (Google style format).
-5.  Error handling: Wrap critical operations in try/except blocks with useful, specific error messages.
-6.  Logging: Replace all print() calls with logging at appropriate levels (DEBUG, INFO, WARNING, ERROR).
-7.  Constants: Move all hardcoded values (URLs, paths, credentials, magic numbers) to UPPER_CASE constants or a config file.
-8.  Small functions: Break functions longer than 20 lines into smaller functions with a single responsibility.
-9.  DRY (Don't Repeat Yourself): Eliminate duplicated code and extract repeated logic into reusable functions.
-10. Imports: Sort and clean imports (stdlib first, then third-party, then local). Remove unused imports.
-11. Context managers: Use `with` for file handling, database connections, and external resources.
-12. List/dict comprehensions: Replace simple loops with comprehensions where readable and appropriate.
-13. Pathlib: Replace string path concatenations with `pathlib.Path`.
-14. Input validation: Add input validation at the beginning of functions for received parameters.
-15. Security: Identify hardcoded credentials or sensitive data and suggest moving them to environment variables using `os.environ` or `python-dotenv`.
-16. Efficiency: Identify costly operations inside loops and suggest optimizations (vectorization, caching, etc.).
-17. Compatibility: Ensure the code runs on Python 3.12+ and is compatible with both Windows and Ubuntu.
-18. Tests: Propose at least 3 test cases using `pytest` for the main functions.
-19. README: Generate a documentation block with: description, dependencies, installation instructions, and usage example.
-20. Final summary: At the end, present a table with: what was changed, why, and the expected impact.
-
-Additional context: [briefly describe what the script does and where it runs, e.g. "Python script that connects to the DWH on Azure SQL Server and generates a sales report. Runs on Ubuntu Server."]
-
-Here is the code to improve:
-
-[PASTE YOUR CODE HERE]
-```
+Before opening a PR, run your code through the AI Review Prompt on [Claude](https://claude.ai).  
+The full, up-to-date prompt lives in **[README.md](README.md)** — copy it from there, paste your code where indicated, and send the message.
 
 > **Tip:** The more context you give Claude about what the script does and where it runs, the better the suggestions will be.
 
@@ -119,15 +90,13 @@ Here is the code to improve:
 
 Check everything before requesting a review:
 
-- [ ] Ran the AI prompt and applied the relevant improvements
-- [ ] Code has type hints and docstrings
-- [ ] No hardcoded credentials or sensitive data
-- [ ] At least one basic test exists in `tests/`
-- [ ] The project `README.md` is up to date
-- [ ] Code runs without errors on my local machine
-- [ ] Branch name follows the convention (`feature/`, `fix/`, `refactor/`)
-- [ ] The PR has a clear description of what it does and why
-
+****- [ ] Branch name follows the convention (`feature/`, `fix/`, `refactor/`, `docs/`)
+- [ ] Code has been reviewed with the AI Review Prompt and relevant suggestions applied
+- [ ] Local branch is up to date with `origin` (`git fetch` + `git pull`)
+- [ ] Feature branch is rebased on top of `dev` (no merge conflicts)
+- [ ] Commits are squashed into a single commit before merging into `dev`
+- [ ] The script's `README.md` reflects any behavior changes
+- [ ] The PR has a clear description of what it does and why****
 ---
 
 *Questions or suggestions about this guide? Open an issue in this repository.*
